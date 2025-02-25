@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  *  controller. Adding @Config allows you to modify values in the FTCDashboard by declaring them here
  *  as public static instance variables.
  */
-public class PID_Elevator {
+public class PID_Motor {
     private final DcMotorEx motor;
     private int targetPosition = 0;
     private final PIDController controller;
@@ -21,13 +21,12 @@ public class PID_Elevator {
     public static double kP = 0;
     public static double kI = 0;
     public static double kD = 0;
-    public static double ff = 0;
     public static int position1 = 200;
     public static int position2 = 600;
     public static double maxPower = .4; // used to limit max power to motor, increase as necessary
 
 
-    public PID_Elevator(HardwareMap hardwareMap) {
+    public PID_Motor(HardwareMap hardwareMap) {
         motor = hardwareMap.get(DcMotorEx.class, "[device name in robot config]");
 
         // uncomment this line if the motor is going in the wrong direction. Positive should be up.
@@ -42,13 +41,6 @@ public class PID_Elevator {
     // when given positive values, the arm should go up
     public void manualMove(double input) {
         motor.setPower(input);
-    }
-
-    // physically move the elevator midway. Increase ff until the elevator does not fall. Record
-    // this number. Continue to increase ff until the elevator starts moving up.
-    // record this number. Find that average between those 2 numbers and use that as the ff value.
-    public void determineFF() {
-        motor.setPower(ff);
     }
 
     public void goToPosition1(){
@@ -72,7 +64,7 @@ public class PID_Elevator {
     public void update() {
         controller.setPID(kP, kI, kD);
         double output = this.controller.calculate(motor.getCurrentPosition(), this.targetPosition);
-        output = limiter(output, maxPower) + ff;
+        output = limiter(output, maxPower);
         motor.setPower(output);
     }
 
