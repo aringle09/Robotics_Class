@@ -4,15 +4,13 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 
-//@Config       //if you want config
-//@TeleOp       //if this is a teleop
-//@Autonomous   //if this is an auto
-public class BlankOp extends OpMode {
+public class Sample_Teleop extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
+    DriveTrain driveTrain;
     GamepadEx g1;
 
     //this section allows us to access telemetry data from a browser
@@ -27,6 +25,7 @@ public class BlankOp extends OpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step
+        driveTrain = new DriveTrain(hardwareMap);
         g1 = new GamepadEx(gamepad1);
 
         // Tell the driver that initialization is complete.
@@ -55,7 +54,13 @@ public class BlankOp extends OpMode {
     @Override
     public void loop() {
         g1.readButtons();
+        double left_y = g1.getLeftY();
+        double right_x = g1.getRightX();
+
+        driveTrain.moveRobot(left_y,right_x);
         dashboardTelemetry.addData("Status", "Run Time: " + runtime.toString());
+        dashboardTelemetry.addData("left y stick", left_y);
+        dashboardTelemetry.addData("right x stick", right_x);
         dashboardTelemetry.update();
     }
 
