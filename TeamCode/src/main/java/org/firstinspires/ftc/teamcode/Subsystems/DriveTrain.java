@@ -14,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 @Config
 public class DriveTrain {
     private IMU imu;
-    private DcMotorEx leftMotor;
-    private DcMotorEx rightMotor;
+    private final DcMotorEx leftMotor;
+    private final DcMotorEx rightMotor;
     private double headingError = 0;
     static final double INCHES_PER_COUNT = 0;
     private double targetHeading;
@@ -38,11 +38,13 @@ public class DriveTrain {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // TODO
         // use the following lines of code to reverse the direction of your motors if needed
         // when given a positive input the robot should move forward
-        // leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
         // rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         // TODO - EDIT these two lines to match YOUR mounting configuration.
@@ -87,8 +89,7 @@ public class DriveTrain {
 
         // Scale speeds down if either one exceeds +/- 1.0;
         double max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-        if (max > 1.0)
-        {
+        if (max > 1.0) {
             leftSpeed /= max;
             rightSpeed /= max;
         }

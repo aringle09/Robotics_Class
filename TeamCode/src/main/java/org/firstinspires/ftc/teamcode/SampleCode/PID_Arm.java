@@ -29,6 +29,7 @@ public class PID_Arm {
 
 
     public PID_Arm(HardwareMap hardwareMap) {
+        // TODO - what did you name your motor in Robot Config? stick it in here
         motor = hardwareMap.get(DcMotorEx.class, "[device name in robot config]");
 
         // uncomment this line if the motor is going in the wrong direction. Positive should be up.

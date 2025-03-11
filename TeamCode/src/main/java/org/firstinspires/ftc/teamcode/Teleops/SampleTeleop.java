@@ -3,11 +3,13 @@ package org.firstinspires.ftc.teamcode.Teleops;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 
-public class Sample_Teleop extends OpMode {
+@TeleOp (name = "testing")
+public class SampleTeleop extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     DriveTrain driveTrain;
@@ -57,10 +59,11 @@ public class Sample_Teleop extends OpMode {
         double left_y = g1.getLeftY();
         double right_x = g1.getRightX();
 
-        driveTrain.moveRobot(left_y,right_x);
+        dashboardTelemetry.addData("left_y value",left_y);
+
+        driveTrain.moveRobot(left_y,-right_x);
         dashboardTelemetry.addData("Status", "Run Time: " + runtime.toString());
-        dashboardTelemetry.addData("left y stick", left_y);
-        dashboardTelemetry.addData("right x stick", right_x);
+        dashboardTelemetry.addData("heading", driveTrain.getHeading());
         dashboardTelemetry.update();
     }
 
