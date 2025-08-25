@@ -54,6 +54,8 @@ public class TestOp extends OpMode {
     @Override
     public void start() {
         runtime.reset();
+        myMotor.setPower(.5);
+
     }
 
     /*
@@ -71,5 +73,6 @@ public class TestOp extends OpMode {
      */
     @Override
     public void stop() {
+        myMotor.setPower(0);
     }
 }
