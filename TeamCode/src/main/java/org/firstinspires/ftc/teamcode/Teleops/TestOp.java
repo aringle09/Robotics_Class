@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config       //if you want config
 @TeleOp       //if this is a teleop
-@Autonomous   //if this is an auto
+//@Autonomous   //if this is an auto
 public class TestOp extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -34,7 +34,7 @@ public class TestOp extends OpMode {
         // step
         g1 = new GamepadEx(gamepad1);
 
-        myMotor = hardwareMap.get(DcMotor.class, myMotor)
+        myMotor = hardwareMap.get(DcMotor.class,"myMotor");
 
         // Tell the driver that initialization is complete.
         dashboardTelemetry.addData("Status", "Initialized");
@@ -54,6 +54,8 @@ public class TestOp extends OpMode {
     @Override
     public void start() {
         runtime.reset();
+        myMotor.setPower(.5);
+
     }
 
     /*
@@ -71,5 +73,6 @@ public class TestOp extends OpMode {
      */
     @Override
     public void stop() {
+        myMotor.setPower(0);
     }
 }
